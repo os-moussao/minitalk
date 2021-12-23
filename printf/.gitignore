@@ -1,0 +1,16 @@
+# ignore object files and libraries
+*.o
+*.a
+
+# ignore testing  files/dirs
+*test*
+*main.c
+
+# ignore shell scripts
+*.sh
+
+# ignore binary files
+*out
+
+# ignore txt files
+*.txt
