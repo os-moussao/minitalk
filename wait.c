@@ -7,11 +7,11 @@
 int main()
 {
     int id = fork();
-    int n, tmp;
+    int n, tmp, exit_status;
     if (!id)
         n = 1;
     else
-        n = 6, tmp = wait(NULL);
+        n = 6, tmp = wait(&exit_status);
 
     for (int i = n; i < n + 5; i++)
     {
@@ -19,5 +19,5 @@ int main()
         fflush(stdout);
     }
     if (id)
-        printf("\nChild pid: %d\nParent pid: %d\n", tmp, getpid());
+        printf("\nChild pid: %d\nParent pid: %d\nExit status: %d\n", tmp, getpid(), exit_status);
 }
