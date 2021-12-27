@@ -6,7 +6,7 @@
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:24:25 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/27 16:47:33 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:39:02 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@
 
 void	handler(int sig)
 {
-	
 	static char	c;
 	static int	cnt;
 	
 	cnt++;
-	c = (c >> 1) | ((sig&1) << 7);
+	c = (c << 1) | (sig&1);
 	if (cnt == 8)
 	{
-		//write(1, &c, 1);
-		ft_printf("%d\n", c);
+		write(1, &c, 1);
 		c = 0;
 		cnt = 0;
 	}

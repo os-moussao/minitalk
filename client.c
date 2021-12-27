@@ -6,7 +6,7 @@
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:22:44 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/27 16:16:59 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:38:20 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ int	ft_atoi(const char *str)
 
 void	send_char(int pid, char c)
 {
-	int	i;
-
+	int		i;
+	
 	i = 8;
 	while (i--)
 	{
-		kill(pid, (c&1)?SIGUSR2:SIGUSR1);
-		c >>= 1;
-		usleep(25000);
+		kill(pid, 30 + ((c >> i) & 1));
+		usleep(500);
 	}
 }
 
