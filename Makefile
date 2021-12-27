@@ -5,7 +5,7 @@ LIB = $(LIBDIR)libftprintf.a
 PRINTF = ftprintf
 
 RM = rm -f
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(CLI) $(SER)
