@@ -6,7 +6,7 @@
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:22:44 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/27 20:41:43 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/29 13:03:02 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,8 @@ int	main(int ac, char **av)
 {
 	int					pid;
 	char				*s;
-	struct sigaction	act;
-
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	act.sa_handler = handler;
-	sigaction(SIGUSR1, &act, NULL);
+	
+	signal(SIGUSR1, handler);
 	if (ac != 3)
 	{
 		ft_printf("Usage: ./client [server PID] [string to send]\n");
@@ -75,7 +71,5 @@ int	main(int ac, char **av)
 	s = av[2];
 	while (*s)
 		send_char(pid, *s++);
-	send_char(pid, (char)0);
-	sleep(1);
-	ft_printf("\n%d\n", getpid());
+	send_char(pid, '\0');
 }

@@ -6,7 +6,7 @@
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:24:25 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/27 19:55:46 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/29 13:02:41 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ void	handler(int sig, siginfo_t *info, void *ucontext)
 	{
 		if (c)
 			write(1, &c, 1);
-		else
-		{
-			ft_printf("\n%d\n", info->si_pid);
-			kill(SIGUSR1, info->si_pid);
-			exit(1);
-		}
+		if (c == 0)
+			kill(info->si_pid, SIGUSR1);
 		cnt = 0;
 	}
 }
