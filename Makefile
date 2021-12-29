@@ -1,29 +1,33 @@
-CLI = client
-SER = server
-LIBDIR = printf/
-LIB = $(LIBDIR)libftprintf.a
-PRINTF = ftprintf
-
 RM = rm -f
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
-all: $(CLI) $(SER)
+LIBDIR = printf/
+LIB = $(LIBDIR)libftprintf.a
+PRINTF = ftprintf
+
+OBJ := client.o server.o
+
+all: client server
 
 $(LIB):
 	make -C $(LIBDIR) bonus
 	make -C $(LIBDIR) clean
 
-$(CLI): client.c $(LIB)
+client: client.o $(LIB)
 	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -l$(PRINTF)
 
-$(SER): server.c $(LIB)
+server: server.o $(LIB)
 	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -l$(PRINTF)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	# $(RM) $(CLI) $(SER)
+	$(RM) $(OBJ)
 
 fclean: clean
+	$(RM) client server
 	make -C $(LIBDIR) fclean
 
 re: fclean all
