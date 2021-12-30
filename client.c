@@ -6,7 +6,7 @@
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:22:44 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/30 13:02:44 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/30 13:17:47 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	send_char(int pid, char c)
 	while (i--)
 	{
 		kill(pid, 30 + ((c >> i) & 1));
-		usleep(300);
+		usleep(250);
 	}
 }
 
@@ -56,8 +56,8 @@ void	handler(int sig)
 
 int	main(int ac, char **av)
 {
-	int					pid;
-	char				*s;
+	int		pid;
+	char	*s;
 	
 	signal(SIGUSR1, handler);
 	if (ac != 3)
