@@ -6,9 +6,11 @@ LIBDIR = printf/
 LIB = $(LIBDIR)libftprintf.a
 PRINTF = ftprintf
 
-OBJ := client.o server.o
+OBJ := client.o server.o client_bonus.o server_bonus.o
 
 all: client server
+
+bonus: client_bonus server_bonus
 
 $(LIB):
 	make -C $(LIBDIR) bonus
@@ -19,6 +21,12 @@ client: client.o $(LIB)
 
 server: server.o $(LIB)
 	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -l$(PRINTF)
+
+client_bonus: client_bonus.o $(LIB)
+	$(CC) $(CFLAGS) -o client $< -L$(LIBDIR) -l$(PRINTF)
+
+server_bonus: server_bonus.o $(LIB)
+	$(CC) $(CFLAGS) -o server $< -L$(LIBDIR) -l$(PRINTF)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<

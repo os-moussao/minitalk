@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:24:25 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/29 16:05:23 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/30 14:00:02 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,25 @@ void	handler(int sig, siginfo_t *info, void *ucontext)
 	static char	c;
 	static int	cnt;
 	static int	last_pid;
-	
+
 	(void)ucontext;
-	cnt++;
-	c = (c << 1) | (sig&1);
 	if (last_pid && last_pid != info->si_pid)
 	{
+		write(1, "\n", 1);
 		c = 0;
 		cnt = 0;
-		last_pid = 0;
 	}
-	if (cnt == 8)
+	c = (c << 1) | (sig & 1);
+	if (++cnt == 8)
 	{
 		if (c)
 			write(1, &c, 1);
 		else
-		{
-			kill(info->si_pid, SIGUSR2);
-			last_pid = 0;
-		}
+			kill(info->si_pid, SIGUSR1);
 		cnt = 0;
 		c = 0;
 	}
 	last_pid = info->si_pid;
-	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
@@ -55,6 +50,6 @@ int	main(void)
 	act.sa_sigaction = handler;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
-	while(1)
-		sleep(1);
+	while (1)
+		pause();
 }

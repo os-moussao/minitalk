@@ -6,7 +6,7 @@
 /*   By: omoussao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:22:44 by omoussao          #+#    #+#             */
-/*   Updated: 2021/12/30 13:17:47 by omoussao         ###   ########.fr       */
+/*   Updated: 2021/12/31 18:22:22 by omoussao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,20 @@ int	ft_atoi(const char *str)
 void	send_char(int pid, char c)
 {
 	int		i;
-	
+
 	i = 8;
 	while (i--)
 	{
-		kill(pid, 30 + ((c >> i) & 1));
-		usleep(250);
+		kill(pid, 30 + (int)((c >> i) & 1));
+		usleep(500);
 	}
-}
-
-void	handler(int sig)
-{
-	(void)sig;
-	ft_printf("Received successfully!\n");
 }
 
 int	main(int ac, char **av)
 {
 	int		pid;
 	char	*s;
-	
-	signal(SIGUSR1, handler);
+
 	if (ac != 3)
 	{
 		ft_printf("Usage: ./client [server PID] [string to send]\n");
@@ -71,5 +64,4 @@ int	main(int ac, char **av)
 	s = av[2];
 	while (*s)
 		send_char(pid, *s++);
-	send_char(pid, '\0');
 }
